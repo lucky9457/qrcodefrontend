@@ -80,19 +80,28 @@ const QRCodeGenerator = () => {
                 <div className="tabs">
                     <div
                         className={`tab ${activeTab === "bookForm" ? "active" : ""}`}
-                        onClick={() => setActiveTab("bookForm")}
+                        onClick={() => {
+                            setActiveTab("bookForm");
+                            setSubmitted(false);
+                        }}
                     >
                         Book Form
                     </div>
                     <div
                         className={`tab ${activeTab === "url" ? "active" : ""}`}
-                        onClick={() => setActiveTab("url")}
+                        onClick={() => {
+                            setActiveTab("url");
+                            setSubmitted(false);
+                        }}
                     >
                         URL
                     </div>
                     <div
                         className={`tab ${activeTab === "textMessage" ? "active" : ""}`}
-                        onClick={() => setActiveTab("textMessage")}
+                        onClick={() => {
+                            setSubmitted(false);
+                            setActiveTab("textMessage");
+                        }}
                     >
                         Text Message
                     </div>
