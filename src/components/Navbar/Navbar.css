@@ -1,0 +1,40 @@
+.navbar {
+
+    margin: 0px;
+
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5% !important;
+
+    align-items: center;
+    height: 10vh;
+
+
+
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px !important;
+
+    width: 90%;
+
+
+}
+
+.navbar h1 {
+    color: rgb(0, 0, 0);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.navbar button {
+    background: none;
+    border: none;
+
+}
+
+.navbar button:hover {
+    text-decoration: underline;
+}
+
+.navitems {
+    display: flex;
+    gap: 20px;
+}

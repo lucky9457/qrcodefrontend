@@ -1,0 +1,169 @@
+.main2 {
+
+    /*
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(233, 232, 232));
+    */
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+    height: 100vh;
+    flex-direction: column;
+
+
+}
+
+.vid {
+    position: absolute;
+    z-index: -1;
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .vid {
+        height: 100%;
+        width: auto;
+        /* Maintain aspect ratio on taller screens */
+    }
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .vid {
+        width: 100%;
+        height: auto;
+        /* Maintain aspect ratio on wider screens */
+    }
+}
+
+.nav {
+    width: 100vw;
+}
+
+.app-container {
+    background-color: rgb(198, 196, 196);
+    display: flex;
+    gap: 10px;
+    width: 70%;
+    padding: 10px;
+    height: 80%;
+    border-radius: 20px;
+
+}
+
+.form-container {
+    width: 50%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.form-container h1 {
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-bottom: 20px;
+
+}
+
+.form-group {
+
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 28px;
+    align-items: center;
+}
+
+.form-group label {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 30%;
+}
+
+.form-group input {
+    font-family: Roboto;
+    width: 70%;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    height: 90%;
+    padding: 3px;
+    border: solid 0.5px grey;
+}
+
+.submit-btn {
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    width: 150px;
+    margin-top: 10px;
+}
+
+.download-btn {
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    width: 150px;
+    margin-top: 10px;
+}
+
+.qr-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    background-color: white;
+    gap: 40px;
+    border-radius: 10px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+
+
+
+.tab.active {
+    background-color: white;
+    font-weight: bold;
+    border-bottom: 2px solid blue;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 90%;
+
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.msgsub {
+    margin-top: 50px !important;
+}
+
+.msgform {
+    margin-top: 100px;
+}
