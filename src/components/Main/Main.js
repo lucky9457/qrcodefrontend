@@ -103,7 +103,7 @@ const QRCodeGenerator = () => {
                             setSubmitted(false);
                         }}
                     >
-                        Dynamic Columns
+                        Form
                     </div>
 
                     <div
@@ -140,7 +140,7 @@ const QRCodeGenerator = () => {
 
                     <div className="form-container">
                         <div className={`tab-content ${activeTab === "dynamicColumns" ? "active" : ""}`}>
-                            <h1>Dynamic Columns</h1>
+                            <h1>Form</h1>
                             <form onSubmit={handleSubmit}>
 
 
