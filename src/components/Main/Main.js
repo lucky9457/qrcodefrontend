@@ -6,7 +6,10 @@ import Navbar from "../Navbar/Navbar";
 import bac2 from "../../assets/bac2.mp4";
 
 const QRCodeGenerator = () => {
-    const [activeTab, setActiveTab] = useState("bookForm");
+    const [activeTab, setActiveTab] = useState("dynamicColumns");
+    const [dynamicColumns, setDynamicColumns] = useState([{ name: "Column 1", value: "", type: "text" }]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newColumnType, setNewColumnType] = useState("text");
     const [formData, setFormData] = useState({
         title: "",
         author: "",
@@ -52,6 +55,18 @@ const QRCodeGenerator = () => {
             setTextMessage("");
         }
     };
+    const handleDynamicChange = (index, field, value) => {
+        const updatedColumns = [...dynamicColumns];
+        updatedColumns[index][field] = value;
+        setDynamicColumns(updatedColumns);
+    };
+
+    const addNewColumn = () => {
+        setDynamicColumns([...dynamicColumns, { name: `Column ${dynamicColumns.length + 1}`, value: "", type: newColumnType }]);
+        setIsModalOpen(false);
+        setNewColumnType("text"); // Reset the type to default
+    };
+
 
     const downloadQRCode = () => {
         const qrCodeElement = document.getElementById("qrCode");
@@ -68,7 +83,10 @@ const QRCodeGenerator = () => {
             ? JSON.stringify(formData, null, 2)
             : activeTab === "url"
                 ? url
-                : textMessage;
+                : activeTab === "textMessage"
+                    ? textMessage
+                    : JSON.stringify(dynamicColumns, null, 2);
+
 
     return (
         <>
@@ -78,6 +96,16 @@ const QRCodeGenerator = () => {
             <Navbar />
             <div className="main2">
                 <div className="tabs">
+                    <div
+                        className={`tab ${activeTab === "dynamicColumns" ? "active" : ""}`}
+                        onClick={() => {
+                            setActiveTab("dynamicColumns");
+                            setSubmitted(false);
+                        }}
+                    >
+                        Dynamic Columns
+                    </div>
+
                     <div
                         className={`tab ${activeTab === "bookForm" ? "active" : ""}`}
                         onClick={() => {
@@ -111,6 +139,81 @@ const QRCodeGenerator = () => {
 
 
                     <div className="form-container">
+                        <div className={`tab-content ${activeTab === "dynamicColumns" ? "active" : ""}`}>
+                            <h1>Dynamic Columns</h1>
+                            <form onSubmit={handleSubmit}>
+
+
+                                {dynamicColumns.map((col, index) => (
+                                    <div key={index} className="form-group-dyn form-group">
+
+                                        <input
+                                            type="text"
+                                            value={col.name}
+                                            onChange={(e) => handleDynamicChange(index, "name", e.target.value)}
+                                            placeholder="Enter column name"
+                                            className="inputdynamiccol"
+                                        />
+                                        <input
+                                            type={col.type}
+                                            value={col.value}
+                                            onChange={(e) => handleDynamicChange(index, "value", e.target.value)}
+                                            placeholder={`Enter ${col.type} value`}
+                                            className="inputdynamicval"
+                                        />
+                                    </div>
+
+                                ))}
+                                <button
+                                    type="button"
+                                    className="submit-btn"
+                                    onClick={() => {
+                                        setIsModalOpen(true);
+
+                                    }
+                                    }
+                                >
+                                    Add Column
+                                </button>
+                                <button type="submit" className="dynamicsbn submit-btn">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                        {isModalOpen && (
+                            <div className={`modal ${isModalOpen ? "active" : ""}`}>
+                                <div className="modal-content">
+                                    <h2>Select Column Type</h2>
+                                    <select value={newColumnType} onChange={(e) => setNewColumnType(e.target.value)}>
+                                        <option value="text">Text</option>
+                                        <option value="number">Number</option>
+                                        <option value="url">URL</option>
+                                        <option value="email">Email</option>
+                                        <option value="date">Date</option>
+                                        <option value="datetime-local">Date & Time</option>
+                                        <option value="month">Month</option>
+                                        <option value="week">Week</option>
+                                        <option value="time">Time</option>
+                                        <option value="password">Password</option>
+                                        <option value="tel">Telephone</option>
+                                        <option value="color">Color</option>
+                                        <option value="range">Range</option>
+                                        <option value="checkbox">Checkbox</option>
+                                        <option value="radio">Radio</option>
+                                        <option value="file">File</option>
+                                        <option value="hidden">Hidden</option> </select>
+                                    <div>
+
+                                        <button onClick={addNewColumn} className="modal-btn">
+                                            Add
+                                        </button>
+                                        <button onClick={() => setIsModalOpen(false)} className="modal-btn">
+                                            Cancel
+                                        </button> </div>
+                                </div>
+                            </div>
+                        )}
+
                         <div className={`tab-content ${activeTab === "bookForm" ? "active" : ""}`}>
                             <h1>Book Details Form</h1>
                             <form onSubmit={handleSubmit}>
@@ -199,7 +302,7 @@ const QRCodeGenerator = () => {
                         )}
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };
