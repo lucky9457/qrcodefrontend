@@ -3,6 +3,7 @@ import { useState } from 'react'
 import './App.css'
 import QRCodeGenerator from './components/Main/Main'
 import Navbar from './components/Navbar/Navbar'
+import Home from './components/Home/Home'
 function App() {
 
   return (
@@ -11,7 +12,7 @@ function App() {
 
 
 
-      <QRCodeGenerator />
+      <Home />
     </div>
   )
 }

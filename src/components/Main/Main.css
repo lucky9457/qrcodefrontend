@@ -16,7 +16,18 @@
 
 .vid {
     position: absolute;
+    position: fixed;
+    /* Ensure the video stays in the background */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Make the video span the full width */
+    height: 100%;
+    /* Make the video span the full height */
+    object-fit: cover;
     z-index: -1;
+
+    width: 100% !important;
 }
 
 @media (max-aspect-ratio: 16/9) {
