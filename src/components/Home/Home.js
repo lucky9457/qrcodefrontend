@@ -4,6 +4,7 @@ import qrCode from '../../assets/QRCode.png';
 import Navbar from '../Navbar/Navbar';
 import "./Home.css"
 import BookformModal from '../BookformModal/BookformModal';
+import BookDetailsModal from '../BookDetailModal/BookDetailModal';
 
 const leftmenu = ["bussiness", "books", "institute"]
 const list = [{
@@ -87,6 +88,7 @@ const list = [{
 const Home = () => {
     const [activetab, setactivetab] = useState('bussiness')
     const [openmodal, setopenmodel] = useState(false)
+    const [selectedBook, setSelectedBook] = useState(null);
 
     const handlemenuclick = (tab) => {
         setactivetab(tab)
@@ -97,6 +99,13 @@ const Home = () => {
     const handleCloseModal = () => {
         setopenmodel(false)
     }
+    const handlebookclose = () => {
+        setSelectedBook(null);
+    }
+    const handleViewDetails = (book) => {
+        setSelectedBook(book); // Set the selected book
+    };
+
     return (
         <div>
             <video className="vid" autoPlay loop muted>
@@ -142,9 +151,10 @@ const Home = () => {
                                                 <p>Author: {each.author}</p>
                                                 <p>publisher: {each.publisher}</p>
                                                 <p>price: Rs. {each.price}</p>
-                                                <button className='viewdetailsbtn'>
-                                                    view Details
-                                                </button>
+                                                <button
+                                                    className='viewdetailsbtn'
+                                                    onClick={() => handleViewDetails(each)}
+                                                >View Details</button>
 
                                             </div>
                                         </div>
@@ -162,6 +172,9 @@ const Home = () => {
 
             </div>
             {openmodal && <BookformModal handleClose={handleCloseModal} />}
+            {selectedBook && (
+                <BookDetailsModal book={selectedBook} handleClose={handlebookclose} />
+            )}
 
         </div>
     )
