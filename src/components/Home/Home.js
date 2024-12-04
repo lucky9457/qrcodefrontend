@@ -3,6 +3,8 @@ import bac2 from "../../assets/bac2.mp4";
 import qrCode from '../../assets/QRCode.png';
 import Navbar from '../Navbar/Navbar';
 import "./Home.css"
+import BookformModal from '../BookformModal/BookformModal';
+
 const leftmenu = ["bussiness", "books", "institute"]
 const list = [{
     title: "think python",
@@ -84,9 +86,16 @@ const list = [{
 }]
 const Home = () => {
     const [activetab, setactivetab] = useState('bussiness')
+    const [openmodal, setopenmodel] = useState(false)
 
     const handlemenuclick = (tab) => {
         setactivetab(tab)
+    }
+    const handleAddbook = () => {
+        setopenmodel(true)
+    }
+    const handleCloseModal = () => {
+        setopenmodel(false)
     }
     return (
         <div>
@@ -113,7 +122,7 @@ const Home = () => {
                 <div className='bodylist'>
                     <div className='overlaybody'>
                         <div className='add-con'>
-                            <button>
+                            <button onClick={handleAddbook}>
                                 Add book
                             </button>
 
@@ -152,6 +161,7 @@ const Home = () => {
                 </div>
 
             </div>
+            {openmodal && <BookformModal handleClose={handleCloseModal} />}
 
         </div>
     )

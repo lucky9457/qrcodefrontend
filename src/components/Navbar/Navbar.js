@@ -3,11 +3,14 @@ import "./Navbar.css"
 const Navbar = () => {
     return (
         <nav className='navbar'>
-            <h1>Qr Code Generator</h1>
-            <div className='navitems'>
-                <button >Home</button>
-                <button >Services</button>
+            <div className='navoverlay'>
+                <h1>Qr Code Generator</h1>
+                <div className='navitems'>
+                    <button >Home</button>
+                    <button >Services</button>
+                </div>
             </div>
+
         </nav>
     )
 }
