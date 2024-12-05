@@ -9,7 +9,7 @@ const BookDetailsModal = ({ book, handleClose }) => {
         <div className="book-details-popup">
             <div className="popup-overlay" onClick={handleClose}></div>
             <div className="popup-content">
-                <div>
+                <div className="contentbookdetails">
                     <button className="popup-close-btn" onClick={handleClose}>
                         &times;
                     </button>

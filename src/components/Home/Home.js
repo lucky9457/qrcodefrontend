@@ -148,9 +148,10 @@ const Home = () => {
                                             <h1>Title: {each.title}</h1>
                                             <p className='bookdesc'>description: {each.description}</p>
                                             <div>
-                                                <p>Author: {each.author}</p>
-                                                <p>publisher: {each.publisher}</p>
-                                                <p>price: Rs. {each.price}</p>
+                                                <p className='publisherbook'>Author: {each.author}</p>
+                                                <p className='publisherbook'> publisher: {each.publisher}</p>
+                                                <p className='price'>Price:  <span className='pricespan'>
+                                                    {each.price}</span></p>
                                                 <button
                                                     className='viewdetailsbtn'
                                                     onClick={() => handleViewDetails(each)}

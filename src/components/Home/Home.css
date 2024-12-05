@@ -254,3 +254,103 @@
     border: none;
     cursor: pointer;
 }
+
+@media(max-width:768px) {
+    .homecontainer {
+        flex-direction: column;
+
+
+    }
+
+    .leftmenu {
+        width: 100%;
+        padding: 5px 10px;
+
+    }
+
+    .menutabs {
+        display: flex;
+        gap: 10px;
+    }
+
+    .overlayleftmenu {
+        padding: 5px;
+        background-color: rgb(248, 248, 248, 0.8);
+    }
+
+    .bodylist {
+        width: 100%;
+        padding: 5px 10px;
+        height: 100%;
+
+
+
+    }
+
+    .eachtab {
+        margin-bottom: 0px;
+    }
+
+    .add-con {
+        height: 7%;
+        margin-bottom: 5px;
+
+    }
+
+    .add-con button {
+        margin-right: 10px;
+    }
+
+    .bookslistcon {
+        padding: 10px;
+
+    }
+
+    .publisherbook {
+        display: none;
+    }
+
+    .qrimagecon {
+        width: 25% !important;
+        height: 100%;
+        background: none;
+    }
+
+
+
+    .contentbook {
+        width: 70%;
+
+    }
+
+    .bookslistcon {
+        margin-top: 7px;
+    }
+
+    .listitemcon {
+        background-color: rgb(248, 248, 248, 0.8);
+        align-items: center;
+
+    }
+
+    .overlaybody {
+        background-color: rgb(248, 248, 248, 0.8);
+    }
+
+    .contentbook div {
+        height: 30px;
+
+    }
+
+    .viewdetailsbtn {
+        margin-top: 3px;
+    }
+
+    .price {}
+
+    .pricespan {
+        font-size: 20px;
+        color: green;
+    }
+
+}

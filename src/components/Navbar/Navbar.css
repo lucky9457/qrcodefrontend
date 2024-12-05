@@ -48,7 +48,6 @@
     border: none;
     color: rgb(0, 0, 0);
     font-size: 15px;
-
     cursor: pointer;
 
 }
@@ -60,4 +59,15 @@
 .navitems {
     display: flex;
     gap: 20px;
+}
+
+@media(max-width:768px) {
+    .navoverlay h1 {
+        font-size: 20px;
+    }
+
+    .navoverlay {
+        background-color: rgb(248, 248, 248, 0.8);
+    }
+
 }
