@@ -1,3 +1,4 @@
+/*bookdetailsmodal.js**/
 import React from "react";
 import "./BookDetailModal.css";
 import qr from "../../assets/QRCode.png"
@@ -25,7 +26,7 @@ const BookDetailsModal = ({ book, handleClose }) => {
 
                 </div>
                 <div className="qrimagecontainer">
-                    <img className="imageqr" src={qr} alt="qr" />
+                    <img className="imageqr" src={book.qrCode} alt="qr" />
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import QRCode from 'react-qr-code';
 import './BookformModal.css';
-
+import axios from "axios";
 
 const BookformModal = ({ handleClose }) => {
     const [formData, setFormData] = useState({
@@ -25,13 +25,48 @@ const BookformModal = ({ handleClose }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-        // Close modal after submission
-        setQrCodeValue(JSON.stringify(formData)); // Generate QR code from form data
-        setSubmitted(true);
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        try {
+            console.log('Submitting book data:', formData);
+            const qrCodeValue = JSON.stringify(formData); // Generate the QR code data
+            setQrCodeValue(qrCodeValue); // Update QR code state
+            console.log('QR Code value set:', qrCodeValue);
+
+            // Step 1: Retrieve the token
+            const token = localStorage.getItem('token'); // Get the token from local storage
+            if (!token) {
+                throw new Error('Authentication token not found. Please log in.');
+            }
+            console.log(token);
+
+            // Step 2: Submit the form data to the backend with the token
+            const response = await axios.post('/books/add', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `${token}`, // Include the token in the Authorization header
+                },
+            });
+            console.log('Book successfully submitted:', response.data);
+
+            // Step 3: Generate QR code from the submitted form data
+
+
+
+            // Step 4: Mark the form as submitted
+            setSubmitted(true);
+            console.log('Form submission state updated to true.');
+
+            // Step 5: Close the modal
+            handleClose();
+            console.log('Modal closed successfully.');
+        } catch (error) {
+            // Handle errors gracefully
+            console.error('Error submitting book data:', error.response?.data || error.message);
+        }
     };
+
     const downloadQRCode = () => {
         const qrCodeElement = document.getElementById("qrCode");
 
@@ -51,9 +86,6 @@ const BookformModal = ({ handleClose }) => {
         });
     };
 
-
-
-
     return (
         <div className="modalbookform">
 
@@ -63,8 +95,6 @@ const BookformModal = ({ handleClose }) => {
                 </button>
 
                 <div className="modal-content">
-
-
                     <h1>Book Details Form</h1>
                     <form onSubmit={handleSubmit}>
                         {Object.keys(formData).map((key) => (
@@ -93,8 +123,6 @@ const BookformModal = ({ handleClose }) => {
                 </div>
 
                 <div className="qr-container">
-
-
                     <h2>Generated QR Code</h2>
 
                     <div
