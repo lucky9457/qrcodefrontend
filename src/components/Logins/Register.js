@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css" // Using the same CSS for styling
 
 const Register = () => {
@@ -10,6 +10,14 @@ const Register = () => {
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/'); // Redirect to a protected route or dashboard
+        }
+    }, [navigate]);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -73,6 +81,7 @@ const Register = () => {
                     />
                 </div>
                 <button type="submit" className="register-button">Register</button>
+                <p>already have an account? <Link to="/login">Login</Link></p>
             </form>
             {error && <p className="error-message">{error}</p>}
             {successMessage && <p className="success-message">{successMessage}</p>}

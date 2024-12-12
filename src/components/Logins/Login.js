@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css"
 
 const Login = () => {
@@ -9,7 +9,16 @@ const Login = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/'); // Redirect to a protected route or dashboard
+        }
+    }, [navigate]);
+
     const handleLogin = async (e) => {
+
+
         e.preventDefault();
         try {
             const response = await axios.post('/auth/login', { username, password }, {
@@ -54,6 +63,7 @@ const Login = () => {
                     />
                 </div>
                 <button type="submit" className="login-button">Login</button>
+                <p>Dont have an account? <Link to="/register">Register</Link></p>
             </form>
             {error && <p className="error-message">{error}</p>}
         </div>
