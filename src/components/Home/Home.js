@@ -3,6 +3,7 @@ import bac2 from "../../assets/bac2.mp4";
 import qrCode from '../../assets/QRCode.png';
 import Navbar from '../Navbar/Navbar';
 import "./Home.css"
+import ClipLoader from 'react-spinners/ClipLoader';
 import BookformModal from '../BookformModal/BookformModal';
 import BookDetailsModal from '../BookDetailModal/BookDetailModal';
 import axios from "axios";
@@ -93,6 +94,7 @@ const Home = () => {
     const [listofbooks, setListofbooks] = useState([])
     const [sortBy, setSortBy] = useState('addedDate');
     const [order, setOrder] = useState('asc');
+    const [loading, setLoading] = useState(false);
     const handlemenuclick = (tab) => {
         setactivetab(tab)
     }
@@ -111,35 +113,48 @@ const Home = () => {
     };
 
     const fetchBooks = async () => {
-        const token = localStorage.getItem('token'); // Get the token from local storage
+        setLoading(true); // Start loading spinner
+        const token = localStorage.getItem('token');
         if (!token) {
             throw new Error('Authentication token not found. Please log in.');
         }
-        console.log(token);
 
-        const lists = await axios.get("/books/", {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `${token}`,
-            }
-        })
-        const { data } = lists
-        setListofbooks(data)
-        console.log(data)
+        try {
+            const { data } = await axios.get("/books/", {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `${token}`,
+                },
+            });
+            setListofbooks(data);
+        } catch (error) {
+            console.error("Error fetching books:", error);
+        } finally {
+            setLoading(false); // Stop loading spinner
+        }
     };
+
+
     const handleSort = async () => {
-        const token = localStorage.getItem('token'); // Get the token from local storage
+        setLoading(true); // Start loading spinner
+        const token = localStorage.getItem('token');
         if (!token) {
             throw new Error('Authentication token not found. Please log in.');
         }
 
-        const sortedBooks = await axios.get(`/books/sort?sortBy=${sortBy}&order=${order}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `${token}`,
-            }
-        });
-        setListofbooks(sortedBooks.data);
+        try {
+            const { data } = await axios.get(`/books/sort?sortBy=${sortBy}&order=${order}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `${token}`,
+                },
+            });
+            setListofbooks(data);
+        } catch (error) {
+            console.error("Error sorting books:", error);
+        } finally {
+            setLoading(false); // Stop loading spinner
+        }
     };
 
     useEffect(() => {
@@ -190,37 +205,43 @@ const Home = () => {
                             </button>
 
                         </div>
+
                         <div className='bookslistcon'>
-                            <ul>
-                                {listofbooks.map((each) => (
-                                    <li className='listitemcon'>
-                                        <div className='qrimagecon'>
-                                            <img src={each.qrCode} alt="qr" className='qrimage' />
-
-                                        </div>
-                                        <div className='contentbook'>
-                                            <h1>Title: {each.title}</h1>
-                                            <p className='bookdesc'>description: {each.description}</p>
-                                            <div>
-                                                <p className='publisherbook'>Author: {each.author}</p>
-                                                <p className='publisherbook'> publisher: {each.publisher}</p>
-                                                <div className='viewdetailsandprice'>
-                                                    <p className='price'>Price:  <span className='pricespan'>
-                                                        {each.price}</span></p>
-                                                    <button
-                                                        className='viewdetailsbtn'
-                                                        onClick={() => handleViewDetails(each)}
-                                                    >View Details</button>
-                                                </div>
-
+                            {loading ? ( // Show spinner while loading
+                                <div className="spinner-container">
+                                    <ClipLoader color="#36d7b7" size={50} />
+                                </div>
+                            ) : (
+                                <ul>
+                                    {listofbooks.map((each) => (
+                                        <li className='listitemcon'>
+                                            <div className='qrimagecon'>
+                                                <img src={each.qrCode} alt="qr" className='qrimage' />
 
                                             </div>
-                                        </div>
+                                            <div className='contentbook'>
+                                                <h1>Title: {each.title}</h1>
+                                                <p className='bookdesc'>description: {each.description}</p>
+                                                <div>
+                                                    <p className='publisherbook'>Author: {each.author}</p>
+                                                    <p className='publisherbook'> publisher: {each.publisher}</p>
+                                                    <div className='viewdetailsandprice'>
+                                                        <p className='price'>Price:  <span className='pricespan'>
+                                                            {each.price}</span></p>
+                                                        <button
+                                                            className='viewdetailsbtn'
+                                                            onClick={() => handleViewDetails(each)}
+                                                        >View Details</button>
+                                                    </div>
 
-                                    </li>
-                                ))}
 
-                            </ul>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    ))}
+
+                                </ul>)}
 
                         </div>
 

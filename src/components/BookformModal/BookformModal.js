@@ -3,6 +3,7 @@ import html2canvas from 'html2canvas';
 import QRCode from 'react-qr-code';
 import './BookformModal.css';
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const BookformModal = ({ handleClose }) => {
     const [formData, setFormData] = useState({
@@ -19,6 +20,8 @@ const BookformModal = ({ handleClose }) => {
     });
     const [submitted, setSubmitted] = useState(false);
     const [qrCodeValue, setQrCodeValue] = useState("");
+    const [qrBlob, setQrBlob] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,7 +30,7 @@ const BookformModal = ({ handleClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
-
+        setLoading(true);
         try {
             console.log('Submitting book data:', formData);
             const qrCodeValue = JSON.stringify(formData); // Generate the QR code data
@@ -59,11 +62,13 @@ const BookformModal = ({ handleClose }) => {
             console.log('Form submission state updated to true.');
 
             // Step 5: Close the modal
-            handleClose();
+
             console.log('Modal closed successfully.');
+            setLoading(false);
         } catch (error) {
             // Handle errors gracefully
             console.error('Error submitting book data:', error.response?.data || error.message);
+            setLoading(false);
         }
     };
 
@@ -81,10 +86,62 @@ const BookformModal = ({ handleClose }) => {
             link.href = canvas.toDataURL();
             link.click();
 
+
+            canvas.toBlob((blob) => {
+                setQrBlob(blob);
+            });
             // Restore original styles
             qrCodeElement.style.cssText = originalStyle;
         });
     };
+
+
+    const shareQRCode = async () => {
+        const qrCodeElement = document.getElementById("qrCode");
+
+        // Temporarily remove styles for better QR code capture
+        const originalStyle = qrCodeElement.style.cssText;
+        qrCodeElement.style.opacity = "1";
+        qrCodeElement.style.filter = "none";
+
+        try {
+            const canvas = await html2canvas(qrCodeElement);
+
+            // Restore original styles
+            qrCodeElement.style.cssText = originalStyle;
+
+            // Convert canvas to a blob
+            canvas.toBlob(async (blob) => {
+                if (!blob) {
+                    console.error("Failed to create blob from QR code.");
+                    return;
+                }
+
+                setQrBlob(blob);
+
+                if (!navigator.share) {
+                    alert("Sharing is not supported on this device or browser.");
+                    return;
+                }
+
+                const file = new File([blob], "QRCode.png", { type: "image/png" });
+
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: "QR Code",
+                        text: "Here is the QR code for the book details.",
+                    });
+                    console.log("QR Code shared successfully!");
+                } catch (shareError) {
+                    console.error("Error sharing QR Code:", shareError);
+                }
+            });
+        } catch (error) {
+            console.error("Error generating QR Code:", error);
+        }
+    };
+
 
     return (
         <div className="modalbookform">
@@ -116,8 +173,8 @@ const BookformModal = ({ handleClose }) => {
                                 />
                             </div>
                         ))}
-                        <button type="submit" className="submit-btn">
-                            Submit
+                        <button type="submit" className="submit-btn" disabled={loading}>
+                            {loading ? <ClipLoader color="#fff" size={20} /> : "Submit"}
                         </button>
                     </form>
                 </div>
@@ -138,9 +195,14 @@ const BookformModal = ({ handleClose }) => {
                         <QRCode value={qrCodeValue} size={200} />
                     </div>
                     {submitted && (
-                        <button className="download-btn" onClick={downloadQRCode}>
-                            Download QR
-                        </button>
+                        <div className="actions">
+                            <button className="download-btn" onClick={downloadQRCode}>
+                                Download QR
+                            </button>
+                            <button className="download-btn share-btn" onClick={shareQRCode}>
+                                Share QR
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>

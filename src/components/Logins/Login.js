@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import ClipLoader from "react-spinners/ClipLoader";
 import "./Login.css"
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,7 +21,10 @@ const Login = () => {
     const handleLogin = async (e) => {
 
 
+
         e.preventDefault();
+        setIsLoading(true);
+        setError(null);
         try {
             const response = await axios.post('/auth/login', { username, password }, {
                 headers: {
@@ -32,6 +37,8 @@ const Login = () => {
         } catch (error) {
             console.error('Error logging in:', error);
             setError('Invalid username or password. Please try again.');
+        } finally {
+            setIsLoading(false); // Stop the loader
         }
     };
 
@@ -62,7 +69,13 @@ const Login = () => {
                         className="input-field"
                     />
                 </div>
-                <button type="submit" className="login-button">Login</button>
+                <button type="submit" className="login-button" disabled={isLoading}>
+                    {isLoading ? (
+                        <ClipLoader color="#ffffff" size={20} /> // Show loader when loading
+                    ) : (
+                        'Login'
+                    )}
+                </button>
                 <p>Dont have an account? <Link to="/register">Register</Link></p>
             </form>
             {error && <p className="error-message">{error}</p>}

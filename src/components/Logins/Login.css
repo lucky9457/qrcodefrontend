@@ -1,7 +1,7 @@
 .login-container,
 .register-container {
     display: flex;
-    background-color: grey;
+    background-color: rgb(224, 224, 224);
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -12,9 +12,11 @@
 
 .login-container form,
 .register-container form {
-    border: solid red 10px;
+    border: solid rgb(0, 170, 255) 5px;
     border-radius: 10px;
+    display: flex;
     padding: 50px;
+    flex-direction: column;
 
 }
 
@@ -25,7 +27,11 @@
     border: none;
     color: white;
     padding: 10px 20px;
-    border-radius: 20px;
+
+    border-radius: 10px;
     margin-top: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    align-self: center;
 
 }

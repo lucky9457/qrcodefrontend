@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css" // Using the same CSS for styling
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -10,6 +11,7 @@ const Register = () => {
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
@@ -21,8 +23,11 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError(null);
         if (password !== confirmPassword) {
             setError('Passwords do not match');
+            setIsLoading(false); // Add this
             return;
         }
 
@@ -40,6 +45,9 @@ const Register = () => {
         } catch (error) {
             console.error('Error registering user:', error);
             setError('Error registering user. Please try again.');
+        }
+        finally {
+            setIsLoading(false); // Stop the loader
         }
     };
 
@@ -80,7 +88,13 @@ const Register = () => {
                         className="input-field"
                     />
                 </div>
-                <button type="submit" className="register-button">Register</button>
+                <button type="submit" className="login-button" disabled={isLoading}>
+                    {isLoading ? (
+                        <ClipLoader color="#ffffff" size={20} /> // Show loader when loading
+                    ) : (
+                        'Register'
+                    )}
+                </button>
                 <p>already have an account? <Link to="/login">Login</Link></p>
             </form>
             {error && <p className="error-message">{error}</p>}

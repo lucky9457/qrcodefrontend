@@ -365,3 +365,12 @@
         margin-bottom: 20px;
     }
 }
+
+.share-btn {
+    margin-left: 5px;
+    background-color: #007bff;
+}
+
+.share-btn:hover {
+    background-color: #0056b3;
+}

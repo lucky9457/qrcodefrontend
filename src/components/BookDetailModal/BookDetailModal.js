@@ -21,6 +21,7 @@ const BookDetailsModal = ({ book, handleClose }) => {
                     <p><strong>Language:</strong> {book.language}</p>
                     <p><strong>ISBN:</strong> {book.isbn}</p>
                     <p><strong>Publication Date:</strong> {book.publicationDate}</p>
+                    <p><strong>Added Date:</strong>{book.addedDate}</p>
                     <p className="descdetails"><strong>Description:</strong> {book.description}</p>
 
 

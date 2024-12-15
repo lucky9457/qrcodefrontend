@@ -197,6 +197,14 @@
 
 }
 
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    /* Adjust as needed */
+}
+
 .bookslistcon {
 
     height: 82%;
@@ -396,4 +404,20 @@
     width: 100%;
 
 
+}
+
+.listitemcon {
+    animation: fadeSlideUp ease 3s;
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
