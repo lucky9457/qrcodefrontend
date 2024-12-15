@@ -171,8 +171,8 @@ const Home = () => {
                 <div className='leftmenu'>
                     <div className='overlayleftmenu'>
                         <ul className='menutabs'>
-                            {leftmenu.map((tab) => {
-                                return <li onClick={() => handlemenuclick(tab)} className={`eachtab ${tab == activetab ? "tabactive" : ""}`}>
+                            {leftmenu.map((tab, index) => {
+                                return <li key={index} onClick={() => handlemenuclick(tab)} className={`eachtab ${tab == activetab ? "tabactive" : ""}`}>
                                     <button className='menubtn'>
                                         {tab}
                                     </button>
@@ -214,7 +214,7 @@ const Home = () => {
                             ) : (
                                 <ul>
                                     {listofbooks.map((each) => (
-                                        <li className='listitemcon'>
+                                        <li key={each.isbn} className='listitemcon'>
                                             <div className='qrimagecon'>
                                                 <img src={each.qrCode} alt="qr" className='qrimage' />
 
@@ -237,7 +237,7 @@ const Home = () => {
 
                                                 </div>
                                             </div>
-
+                                            {!listofbooks && <p>No books to show</p>}
                                         </li>
                                     ))}
 
