@@ -7,6 +7,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import BookformModal from '../BookformModal/BookformModal';
 import BookDetailsModal from '../BookDetailModal/BookDetailModal';
 import axios from "axios";
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const leftmenu = ["bussiness", "books", "institute"]
 const list = [{
@@ -161,6 +162,40 @@ const Home = () => {
         fetchBooks();
     }, [])
 
+
+    const handleDeleteBook = async (id) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Authentication token not found. Please log in.');
+            return;
+        }
+
+        if (!window.confirm("Are you sure you want to delete this book?")) {
+            return; // Exit if the user cancels the action
+        }
+
+        try {
+            const response = await axios.delete(`/books/delete/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `${token}`,
+                },
+            });
+
+            if (response.status === 200) {
+                // Remove the deleted book from the list in the frontend
+                setListofbooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
+                alert("Book deleted successfully!");
+            }
+        } catch (error) {
+            console.error("Error deleting book:", error);
+            alert("Failed to delete the book. Please try again.");
+        } finally {
+            fetchBooks();
+        }
+    };
+
+
     return (
         <div>
             <video className="vid" autoPlay loop muted>
@@ -232,6 +267,20 @@ const Home = () => {
                                                             className='viewdetailsbtn'
                                                             onClick={() => handleViewDetails(each)}
                                                         >View Details</button>
+
+                                                        <button
+                                                            className='editbtn'
+
+                                                        >
+                                                            <FaEdit /> Edit
+                                                        </button>
+                                                        <button
+                                                            className='deletebtn'
+                                                            onClick={() => handleDeleteBook(each._id)}
+                                                        >
+                                                            <FaTrash /> Delete
+                                                        </button>
+
                                                     </div>
 
 

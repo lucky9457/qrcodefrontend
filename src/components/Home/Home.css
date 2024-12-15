@@ -421,3 +421,24 @@
         transform: translateY(0);
     }
 }
+
+
+.editbtn,
+.deletebtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.editbtn:hover {
+    color: #007bff;
+}
+
+.deletebtn:hover {
+    color: #dc3545;
+}
