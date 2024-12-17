@@ -1,0 +1,212 @@
+.pdfuploadContainer {
+    width: 100%;
+    background-color: rgb(0, 0, 0, 0.6);
+    height: 100%;
+    padding: 10px;
+    width: 85%;
+}
+
+.pdfuploadoverlay {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+
+    border: solid 10px white;
+}
+
+.pdfAddcontainer {
+    height: 15%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border: solid 1px grey;
+    box-shadow: inset 0 0 100px rgba(56, 56, 56, 0.8);
+    background-color: rgb(0, 0, 0, 0.4);
+
+
+}
+
+.pdfsListContainer {
+    height: 83%;
+    background-color: rgb(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 100px rgba(56, 56, 56, 0.8);
+    border-radius: 10px;
+    margin-top: 1.15%;
+    box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    overflow: scroll;
+
+}
+
+.pdfAddcontainer button {
+    background-color: blue;
+    margin-right: 20px;
+    padding: 10px 25px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 5px;
+}
+
+.pdfAddcontainer select {
+    padding: 9px 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.listItem {
+    width: 100%;
+    background-color: white;
+    height: 20%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+
+
+
+
+
+}
+
+.qr_imagecontainer {
+
+
+    width: 9.5%;
+    padding: 10px;
+
+}
+
+
+.qrimage {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+}
+
+.pdfitemContent {
+    width: 90%;
+
+    display: flex;
+    align-items: center;
+
+}
+
+.pdfitemContent .contentpdf h2 {
+    font-family: calibri;
+    font-weight: 200;
+}
+
+.actionbuttons {
+    width: 20%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+.actionbuttons button {
+    background-color: blue;
+    margin-right: 20px;
+    padding: 10px 25px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 5px;
+    width: 100px;
+}
+
+.actionbuttons .editbtn:hover {
+    color: rgb(255, 230, 0);
+}
+
+.contentpdf {
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    justify-content: center;
+}
+
+/*popup*/
+/* Popup Overlay */
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popupContent {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popupContent h2 {
+    margin-bottom: 20px;
+}
+
+.qrContainer {
+    margin-top: 20px;
+}
+
+.closeBtn {
+    margin-top: 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.closeBtn:hover {
+    background-color: darkred;
+}
+
+.addFileBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.addFileBtn:hover {
+    background-color: #45a049;
+}
+
+@media (max-width:800px) {
+    .qrimagecontainer {
+        width: 20% !important;
+    }
+
+    .pdfuploadContainer {
+        width: 100%;
+    }
+
+}

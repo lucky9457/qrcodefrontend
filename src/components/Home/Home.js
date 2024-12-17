@@ -8,8 +8,9 @@ import BookformModal from '../BookformModal/BookformModal';
 import BookDetailsModal from '../BookDetailModal/BookDetailModal';
 import axios from "axios";
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import Pdfuploadpage from '../Pdfuploadpage/Pdfuploadpage';
 
-const leftmenu = ["bussiness", "books", "institute"]
+const leftmenu = ["books", "bussiness", "institute", "pdfupload"]
 const list = [{
     title: "think python",
     author: "lucky",
@@ -89,7 +90,7 @@ const list = [{
     publicationDate: "25/10/2000",
 }]
 const Home = () => {
-    const [activetab, setactivetab] = useState('bussiness')
+    const [activetab, setactivetab] = useState('books')
     const [openmodal, setopenmodel] = useState(false)
     const [selectedBook, setSelectedBook] = useState(null);
     const [listofbooks, setListofbooks] = useState([])
@@ -218,85 +219,94 @@ const Home = () => {
                     </div>
 
                 </div>
-                <div className='bodylist'>
-                    <div className='overlaybody'>
-                        <div className='add-con'>
-                            <div className='sortcon'>
-                                <select className='titleselect' value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
-                                    <option value="addedDate">Date</option>
-                                    <option value="title">Title</option>
-                                </select>
-                                <select value={order} onChange={(e) => { setOrder(e.target.value); }}>
-                                    <option value="asc">asc</option>
-                                    <option value="desc">desc</option>
-                                </select>
-                                <button className='sortbtn' onClick={handleSort}>
-                                    Sort
+                {activetab === "books" &&
+                    <div className='bodylist'>
+                        <div className='overlaybody'>
+                            <div className='add-con'>
+                                <div className='sortcon'>
+                                    <select className='titleselect' value={sortBy} onChange={(e) => { setSortBy(e.target.value); }}>
+                                        <option value="addedDate">Date</option>
+                                        <option value="title">Title</option>
+                                    </select>
+                                    <select value={order} onChange={(e) => { setOrder(e.target.value); }}>
+                                        <option value="asc">asc</option>
+                                        <option value="desc">desc</option>
+                                    </select>
+                                    <button className='sortbtn' onClick={handleSort}>
+                                        Sort
+                                    </button>
+                                </div>
+
+                                <button onClick={handleAddbook}>
+                                    Add book
                                 </button>
+
                             </div>
 
-                            <button onClick={handleAddbook}>
-                                Add book
-                            </button>
-
-                        </div>
-
-                        <div className='bookslistcon'>
-                            {loading ? ( // Show spinner while loading
-                                <div className="spinner-container">
-                                    <ClipLoader color="#36d7b7" size={50} />
-                                </div>
-                            ) : (
-                                <ul>
-                                    {listofbooks.map((each) => (
-                                        <li key={each.isbn} className='listitemcon'>
-                                            <div className='qrimagecon'>
-                                                <img src={each.qrCode} alt="qr" className='qrimage' />
-
-                                            </div>
-                                            <div className='contentbook'>
-                                                <h1>Title: {each.title}</h1>
-                                                <p className='bookdesc'>description: {each.description}</p>
-                                                <div>
-                                                    <p className='publisherbook'>Author: {each.author}</p>
-                                                    <p className='publisherbook'> publisher: {each.publisher}</p>
-                                                    <div className='viewdetailsandprice'>
-                                                        <p className='price'>Price:  <span className='pricespan'>
-                                                            {each.price}</span></p>
-                                                        <button
-                                                            className='viewdetailsbtn'
-                                                            onClick={() => handleViewDetails(each)}
-                                                        >View Details</button>
-
-                                                        <button
-                                                            className='editbtn'
-
-                                                        >
-                                                            <FaEdit /> Edit
-                                                        </button>
-                                                        <button
-                                                            className='deletebtn'
-                                                            onClick={() => handleDeleteBook(each._id)}
-                                                        >
-                                                            <FaTrash /> Delete
-                                                        </button>
-
-                                                    </div>
-
+                            <div className='bookslistcon'>
+                                {loading ? ( // Show spinner while loading
+                                    <div className="spinner-container">
+                                        <ClipLoader color="#36d7b7" size={50} />
+                                    </div>
+                                ) : (
+                                    <ul>
+                                        {listofbooks.map((each) => (
+                                            <li key={each.isbn} className='listitemcon'>
+                                                <div className='qrimagecon'>
+                                                    <img src={each.qrCode} alt="qr" className='qrimage' />
 
                                                 </div>
-                                            </div>
-                                            {!listofbooks && <p>No books to show</p>}
-                                        </li>
-                                    ))}
+                                                <div className='contentbook'>
+                                                    <h1>Title: {each.title}</h1>
+                                                    <p className='bookdesc'>description: {each.description}</p>
+                                                    <div>
+                                                        <p className='publisherbook'>Author: {each.author}</p>
+                                                        <p className='publisherbook'> publisher: {each.publisher}</p>
+                                                        <p className='price'>Price:  <span className='pricespan'>
+                                                            {each.price}</span></p>
+                                                        <div className='viewdetailsandprice'>
+                                                            <div>
 
-                                </ul>)}
+                                                                <button
+                                                                    className='viewdetailsbtn'
+                                                                    onClick={() => handleViewDetails(each)}
+                                                                >View Details</button>
+
+
+
+                                                                <button
+                                                                    className='editbtn'
+
+                                                                >
+                                                                    <FaEdit /> Edit
+                                                                </button>
+                                                                <button
+                                                                    className='deletebtn'
+                                                                    onClick={() => handleDeleteBook(each._id)}
+                                                                >
+                                                                    <FaTrash /> Delete
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                {!listofbooks && <p>No books to show</p>}
+                                            </li>
+                                        ))}
+
+                                    </ul>)}
+
+                            </div>
 
                         </div>
 
-                    </div>
-
-                </div>
+                    </div>}
+                {activetab === "pdfupload" &&
+                    <Pdfuploadpage />
+                }
 
             </div>
             {openmodal && <BookformModal handleClose={handleCloseModal} />}

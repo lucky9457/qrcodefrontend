@@ -296,6 +296,12 @@
     background: none;
     border: none;
     cursor: pointer;
+    align-self: flex-end;
+    justify-self: flex-end;
+}
+
+.publisherbook {
+    width: 30%;
 }
 
 @media(max-width:768px) {
@@ -405,6 +411,8 @@
 
 
 }
+
+.viewdetailsandprice div {}
 
 .listitemcon {
     animation: fadeSlideUp ease 3s;
